@@ -1,8 +1,10 @@
+package bin;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class homework1 {
+public class Homework1 {
 
 	static class MinMax { 		  
         int min; 
