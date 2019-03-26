@@ -12,7 +12,20 @@ public class Homework2 {
 		/* take some sort of input of size of arrays that need to be multiplied
 		 * If operation cannot be done stop and tell user
 		 *  (code?)
-		 *  uhhh dsplay the dynamic and greedy runtimes*/
+		 *  uhhh dsplay the dynamic and greedy runtimes
+		
+		______GGGGGGGGGGGG____GGGGGGGGGGGG
+		_____GGG_____________GGG__________
+		____GGG_____________GGG___________
+		___GGG_____________GGG____________
+		___GGG_____________GGG____________
+		___GGG_____GGGGGGG_GGG_____GGGGGGG
+		____GGG________GGG__GGG________GGG
+		_____GGG_______GGG___GGG_______GGG
+		______GGG______GGG____GGG______GGG
+		_______GGGGGGGGGGG_____GGGGGGGGGGG */
+
+		
 		
 		System.out.println("Input the total number of matrices");
 		//scanning in the total number of rows as it is the total number of matrices i'll be dealing with
@@ -32,57 +45,93 @@ public class Homework2 {
 			matrices[i][1] = ySize;
 		}
 		scanInt.close();
-		/*if (FindGreedyPath() == 00) {
-			System.out.print("You cannot multiple all these matrices together");
+		
+		/* this is just for seeing whats in the set */
+		System.out.print("{ ");
+		for (int i = 0; i < matrices.length; i++)  {
+			System.out.print("[");
+            for (int j = 0; j < matrices[i].length; j++) {
+                System.out.print(matrices[i][j]);
+                if (j != matrices[i].length -1) System.out.print(",");               
+            }
+            System.out.print("]");
+            
+            if (i == 0) {
+            	System.out.print(" , ");
+            }
+		}
+		System.out.print(" }");
+		System.out.println();
+		/*
+		int temp = FindGreedyPath();
+		if (temp == 0) {
+			System.out.println("You cannot multiply all these matrices together");
 		}
 		else  {
-			System.out.print("The time it takes greedy is " + FindGreedyPath());
+			System.out.println("The time it takes my greedy dog is (n^3) " + temp);
 		}*/
+		System.out.println(""); 
+		int temp = FindDynamicPath(matrices, 1, matrices.length-1);
 		
-		if (FindDynamicPath() == 0) {
-			System.out.print("You cannot multiple all these matrices together");
+		if (temp == 0) {
+			System.out.println("You cannot multiple all these matrices together");
 		}
 		else {
-			System.out.print("The time it takes dynamic is " + FindDynamicPath());
-		}
+			System.out.println("The time it takes dynamic is " + temp);
+		} 		
 		
-		
-		
-		/*
-		 for (int i = 0; i < matrices.length; i++) 
-			  
-	            for (int j = 0; j < matrices[i].length; j++) 
-	                System.out.print(matrices[i][j] + " "); */
+		System.out.println();
 	}
 	
-	 static int FindDynamicPath() {
-		 int path = 0;
+	 static int FindDynamicPath(int matrices[][], int m, int n) {
 		 
-		 if (matrices.length == 1)
+		 if (matrices.length <= 1)
 			 return 0;
 		 
-		 for (int i = 0; i < matrices.length; i++) {
-			 if (matrices.length > i+1 && matrices[i][0] == matrices[i+1][1]) {
-				 if (path == 0) {					 
-					 path = 1;
-					 path *= matrices[i][0] * matrices[i+1][1];
-				 }
-				 else {
-					 path *= matrices[i][0] * matrices[i+1][1];
-				 }
-			 }				 
-		 }
+		 int path = Integer.MAX_VALUE;
+		 		  
+	        for (int k=m; k<n; k++) 
+	        { 
+	            int count = FindDynamicPath(matrices, m, k) + 
+	            			FindDynamicPath(matrices, k+1, n) + 
+	                        matrices[m-1][0]*matrices[k][0]*matrices[n][0]; 
+	  
+	            if (count < path)  {
+	            	path = count; 
+	            }	               
+	        } 
 		 
-		 return path;
+		 return path ;
 	 }
 	 
-	 static int FindGreedyPath() {
-		 int path = 0;
+	static double FindGreedyPath() {
+		 double path = 0;
 		 
 		 if (matrices.length == 1)
-			 return 0;
-		 
-		 return path;
+			 return 0;	 
+
+		 for (int i = 0; i < matrices.length; i++) {
+			 for (int j = 1; i < matrices.length; i++) {
+				 int temp = 0;
+				 if(i+j <= matrices.length && 
+						 matrices[i][1] == matrices[i+j][0] && 
+						 temp < matrices[i][1] * matrices[i+j][0]  ) {
+					 
+					 temp = matrices[i][1] * matrices[i+j][0];
+					 path += matrices[i][1] * matrices[i+j][0];
+					 
+				 }
+				 if(i-j >= 0 && 
+						 matrices[i][1] == matrices[i-j][0] &&
+						 temp < matrices[i][1] * matrices[i-j][0]) {
+					 
+					 temp = matrices[i][1] * matrices[i-j][0];
+					 path += matrices[i][1] * matrices[i-j][0];
+					 
+				 }				 
+			 }
+		 }
+		 return path;	 		 
 	 }
 
 }
