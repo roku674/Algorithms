@@ -22,3 +22,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /bin/
+src/bin/Bag.java
+src/bin/BoruvkaMST.java
+src/bin/Edge.java
+src/bin/EdgeWeightedGraph.java
+src/bin/Homework2.java
+src/bin/In.java
+src/bin/StdIn.java
+src/bin/StdOut.java
+src/bin/StdRandom.java
+src/bin/UF.java
